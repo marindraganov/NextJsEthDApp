@@ -36,3 +36,54 @@ a {
   justify-content: center;
   align-items: center;
 }
+
+.library-form {
+  width: 60%;
+  margin: 5px;
+}
+
+.library-books {
+  width: 30%;
+  border-: 1px solid black;
+}
+
+.book-name {
+  width: 20%;
+  display: inline-flex;
+  margin: 3px;
+}
+
+.book-value {
+  display: inline-flex;
+  width: 20%;
+}
+
+.library {
+  display: flex;
+  flex-direction: row;
+}
+
+form {
+  margin-top: 10px
+}
+
+.button-wrapper {
+  margin: 20px;
+}
+
+.transactionLink {
+  text-decoration: underline;
+  color: blue;
+}
+
+.error {
+  color: red;
+}
+
+.info-line {
+  display: inline-block;
+  border: 1px solid grey;
+  border-radius: 5px;
+  padding: 2px;
+  margin: 2px;
+}

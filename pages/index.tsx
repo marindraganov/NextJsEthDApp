@@ -4,7 +4,7 @@ import Link from "next/link";
 import Account from "../components/Account";
 import NativeCurrencyBalance from "../components/NativeCurrencyBalance";
 import TokenBalance from "../components/TokenBalance";
-import USLibrary from "../components/USLibrary";
+import Library from "../components/Library";
 import { ALBT_TOKEN_ADDRESS, US_ELECTION_ADDRESS } from "../constants";
 import useEagerConnect from "../hooks/useEagerConnect";
 
@@ -18,14 +18,14 @@ function Home() {
   return (
     <div>
       <Head>
-        <title>USElectionDAapp</title>
+        <title>LibraryDAapp</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <header>
         <nav>
           <Link href="/">
-            <a>USElectionDAapp</a>
+            <a>LibraryDAapp</a>
           </Link>
 
           <Account triedToEagerConnect={triedToEagerConnect} />
@@ -36,7 +36,7 @@ function Home() {
         <h1>
           Welcome to{" "}
           <a href="https://github.com/marindraganov/USElectionDApp">
-            USElectionDAapp
+            LibraryDAapp
           </a>
         </h1>
 
@@ -45,7 +45,7 @@ function Home() {
             <NativeCurrencyBalance />
 
             <TokenBalance tokenAddress={ALBT_TOKEN_ADDRESS} symbol="ALBT" />
-            <USLibrary contractAddress={US_ELECTION_ADDRESS} />
+            <Library contractAddress={US_ELECTION_ADDRESS} />
           </section>
         )}
       </main>
