@@ -14,8 +14,8 @@ const Library = ({ contractAddress }: LibraryContract) => {
   const { account, library, chainId } = useWeb3React<Web3Provider>();
   const libraryContract = useLibraryContract(contractAddress);
   const [bookName, setBookName] = useState<string | undefined>('');
-  const [bookIdToRent, setBookIdToRent] = useState();
-  const [bookIdToReturn, setBookIdToReturn] = useState();
+  const [bookIdToRent, setBookIdToRent] = useState(0);
+  const [bookIdToReturn, setBookIdToReturn] = useState(0);
   const [numberOfCopies, setNumberOfCopies] = useState<number | undefined>(0);
   const [txError, setTxError] = useState(null);
   const [transactionInProgress, setTransactionInProgress] = useState(null);
@@ -23,21 +23,21 @@ const Library = ({ contractAddress }: LibraryContract) => {
 
   useEffect(() => {
     getBooks();
+
+    libraryContract.on('NewBookAdded', () => {
+      getBooks();
+    })
+    
+    libraryContract.on('BookBorrowed', () => {
+      getBooks();
+    })
+
+    libraryContract.on('BookReturned', () => {
+      getBooks();
+    })
   },[])
 
 
-
-  // const getCurrentLeader = async () => {
-  //   const currentLeader = await usElectionContract.currentLeader();
-  //   setCurrentLeader(currentLeader == Leader.UNKNOWN ? 'Unknown' : currentLeader == Leader.BIDEN ? 'Biden' : 'Trump')
-  // }
-
-  // const getCurrentSeats = async () => {
-  //   const currentSeatsBiden = await usElectionContract.seats(Leader.BIDEN);
-  //   setWonSeatsBiden(currentSeatsBiden);
-  //   const currentSeatsTrump = await usElectionContract.seats(Leader.TRUMP);
-  //   setWonSeatsTrump(currentSeatsTrump);
-  // }
 
   const getBooks = async () => {
     const libraryBooks = await libraryContract.getBooks();
@@ -47,19 +47,19 @@ const Library = ({ contractAddress }: LibraryContract) => {
   const addBook = async () => {
     executeTransaction(
       () => libraryContract.addBook(bookName, numberOfCopies),
-      () => {resetAddBook(); getBooks();})
+      () => {resetAddBook();})
   }
 
   const rentBook = async () => {
     executeTransaction(
       () => libraryContract.borrowBook(bookIdToRent), 
-      () => {resetRentBook(); getBooks();})
+      () => {resetRentBook();})
   }
 
   const returnBook = async () => {
     executeTransaction(
       () => libraryContract.returnBook(bookIdToReturn), 
-      () => {resetReturnBook(); getBooks();})
+      () => {resetReturnBook();})
   }
 
   const executeTransaction = async (txFunc, successCallcack) => {
@@ -107,11 +107,11 @@ const Library = ({ contractAddress }: LibraryContract) => {
   }
 
   const resetRentBook = async () => {
-    setBookIdToRent('');
+    setBookIdToRent(0);
   }
 
   const resetReturnBook = async () => {
-    setBookIdToReturn('');
+    setBookIdToReturn(0);
   }
 
   return (
